@@ -64,11 +64,22 @@ import java.util.HashMap;
  * characters in each line, representing which directions it is possible to walk
  * from that room. Refer to the following legend:
  *
- * Character Can walk norte? Can walk south? Can walk west? Can walk east? 1 Yes
- * No No No 2 No Yes No No 3 Yes Yes No No 4 No No Yes No 5 Yes No Yes No 6 No
- * Yes Yes No 7 Yes Yes Yes No 8 No No No Yes 9 Yes No No Yes a No Yes No Yes b
- * Yes Yes No Yes c No No Yes Yes d Yes No Yes Yes e No Yes Yes Yes f Yes Yes
- * Yes Yes
+ * Character    Can walk north? Can walk south? Can walk west?  Can walk east?
+ * 1            Yes             No              No              No
+ * 2            No              Yes             No              No
+ * 3            Yes             Yes             No              No
+ * 4            No              No              Yes             No
+ * 5            Yes             No              Yes             No
+ * 6            No              Yes             Yes             No
+ * 7            Yes             Yes             Yes             No
+ * 8            No              No              No              Yes
+ * 9            Yes             No              No              Yes
+ * a            No              Yes             No              Yes
+ * b            Yes             Yes             No              Yes
+ * c            No              No              Yes             Yes
+ * d            Yes             No              Yes             Yes
+ * e            No              Yes             Yes             Yes
+ * f            Yes             Yes             Yes             Yes
  *
  * Limits
  *
