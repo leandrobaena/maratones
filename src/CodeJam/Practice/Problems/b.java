@@ -36,8 +36,18 @@ import java.util.HashMap;
  * west, your path through the following maze would be
  * WRWWLWWLWWLWLWRRWRWWWRWWRWLW:
  *
- * _______ | | | | ---| | | | | -- | | | ---- | | | | -- | | | |----|
- *
+ * |-----   |
+ * |        |
+ * |  |-----|
+ * |  |     |
+ * |  |--|  |
+ * |        |
+ * |-----|  |
+ *       |  |
+ * |  |--|  |
+ * |        |
+ * |--------|
+ * 
  * If the entrance and exit were reversed such that you began outside the west
  * wall and finished out the norte wall, your path would be
  * WWRRWLWLWWLWWLWWRWWRWWLW. Given your two paths through the maze (entrance to
