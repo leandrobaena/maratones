@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -90,7 +89,7 @@ public class b {
      * @throws FileNotFoundException Si no encuentra el archivo de entrada de datos
      * @throws IOException Si hubo un error al leer el archivo de entrada de datos
      */
-    public static void main(String args[]) throws FileNotFoundException, IOException, ParseException {
+    public static void main(String args[]) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new FileReader("b.in"));
         String linea;
         int NA, NB, T, numCases;
@@ -153,13 +152,6 @@ public class b {
                             tracks.get(i).end = tracks.get(j).end;
                             tracks.get(i).currentInA = tracks.get(j).currentInA;
                             tracks.remove(j);
-                        } else {
-                            if(tracks.get(i).after(tracks.get(j), delay) && tracks.get(i).currentInA != tracks.get(j).currentInA){
-                                ended = false;
-                                tracks.get(i).start = tracks.get(j).start;
-                                tracks.get(i).currentInA = tracks.get(j).currentInA;
-                                tracks.remove(j);
-                            }
                         }
                     }
                 }
@@ -248,46 +240,6 @@ public class b {
             } else {
                 if(hoursEndThis == hoursStartAnother){
                     return (minutesEndThis > minutesStartAnother);
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        /**
-         * Determina si una hora de salida es posterior o igual a la de llegada
-         * de otro trayecto
-         * @param another El otro trayecto con el que se compara
-         * @param delay Minutos de espera antes de poder iniciar un nuevo
-         * trayecto
-         * @return Si es posterior o no
-         */
-        private boolean after(Track another, int delay) {
-            int hoursStartThis;
-            int minutesStartThis;
-            int hoursEndAnother;
-            int minutesEndAnother;
-            
-            String aux[] = this.start.split(":");
-            hoursStartThis = Integer.parseInt(aux[0]);
-            minutesStartThis = Integer.parseInt(aux[1]);
-            
-            aux = another.end.split(":");
-            hoursEndAnother = Integer.parseInt(aux[0]);
-            minutesEndAnother = Integer.parseInt(aux[1]);
-            
-            //Aplicar minutos de espera
-            minutesEndAnother += delay;
-            if(minutesEndAnother >= 60){
-                minutesEndAnother -= 60;
-                hoursEndAnother++;
-            }
-            
-            if(hoursStartThis > hoursEndAnother){
-                return true;
-            } else {
-                if(hoursStartThis == hoursEndAnother){
-                    return (minutesStartThis >= minutesEndAnother);
                 } else {
                     return false;
                 }
