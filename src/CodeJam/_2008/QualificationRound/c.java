@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.lang.Math;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 /**
  * Fly Swatter
@@ -93,7 +94,7 @@ public class c {
         BufferedReader br = new BufferedReader(new FileReader("c.in"));
         String linea;
         int numCases;
-        float f, R, t, r, g;
+        double f, R, t, r, g;
         
         numCases = Integer.parseInt(br.readLine());
 
@@ -106,9 +107,66 @@ public class c {
             r = Float.parseFloat(aux[3]);
             g = Float.parseFloat(aux[4]);
             
+            /*
+             * Por conveniencia se hacen los siguientes ajustes:
+             * El grueso de la cuerda pasa de 2r por 2(r + f) y el grueso del
+             * borde de la raqueta a (t + f), con lo que la mosca se convierte
+             * en un solo punto.
+             *
+             * Se toma solo el primer cuadrante y luego se multiplica por 4 para
+             * encontrar la probavilidad total.
+             *
+             * La probabilidad se encuentra dividiendo el área total del
+             * cuadrante por el área libre con cuerdas o borde de la raqueta,
+             * esta última es la resta del área total menos el área sin cuerdas
+             * ni borde de la raqueta
+             */
             
+            double rad = R-t-f;
+            double ar = 0.0;
+            for (double x1 = r + f; x1 < R - t - f; x1 += g + 2 * r) {
+                for (double y1 = r + f; y1 < R - t - f; y1 += g + 2 * r) {
+                    double x2 = x1 + g - 2*f;
+                    double y2 = y1 + g - 2*f;
+                    if (x2 <= x1 || y2 <= y1) continue;
+                    if (x1 * x1 + y1 * y1 >= rad * rad) continue;//Cuadrado por fuera del círculo
+                    if (x2 * x2 + y2 * y2 <= rad * rad) {
+                        //Todo el cuadrado dentro del círculo
+                        ar += (x2 - x1) * (y2 - y1);//Área del cuadrado
+                    } else if (x1 * x1 + y2 * y2 >= rad * rad && x2 * x2 + y1 * y1 >= rad * rad) {
+                        //Sólamente (x1, y1) dentro del círculo.
+                        ar += circle_segment(rad, Math.acos(x1 / rad) - Math.asin(y1 / rad)) +
+                            (Math.sqrt(rad * rad - x1 * x1) - y1) *
+                            (Math.sqrt(rad * rad - y1 * y1) - x1) / 2;
+                    } else if (x1 * x1 + y2 * y2 >= rad * rad) {
+                        //(x1, y1) y (x2, y1) dentro del círculo.
+                        ar += circle_segment(rad, Math.acos(x1 / rad) - Math.acos(x2 / rad)) +
+                            (x2-x1) * (Math.sqrt(rad * rad - x1 * x1) - y1 +
+                            Math.sqrt(rad * rad - x2 * x2) - y1) / 2;
+                    } else if (x2 * x2 + y1 * y1 >= rad * rad) {
+                        //(x1, y1) y (x1, y2) dentro del círculo.
+                        ar += circle_segment(rad, Math.asin(y2 / rad) - Math.asin(y1 / rad)) +
+                            (y2-y1) * (Math.sqrt(rad * rad - y1 * y1) - x1 +
+                            Math.sqrt(rad * rad - y2 * y2) - x1) / 2;
+                    } else {
+                        //Todos excepto (x2 , y2) dentro del círculo.
+                        ar += circle_segment(rad, Math.asin(y2 / rad) - Math.acos(x2 / rad)) +
+                            (x2 - x1) * (y2 - y1) -
+                            (y2 - Math.sqrt(rad * rad - x2 * x2)) *
+                            (x2 - Math.sqrt(rad * rad - y2 * y2)) / 2;
+                    }
+                }
+            }
+            DecimalFormatSymbols simbols = new DecimalFormatSymbols();
+            simbols.setDecimalSeparator('.');
+            DecimalFormat df = new DecimalFormat("0.000000");
+            df.setDecimalFormatSymbols(simbols);
             
-            System.out.println("Case #" + (i + 1) + ": ");
+            System.out.println("Case #" + (i + 1) + ": " + df.format(1 - ar / (Math.PI * R * R / 4)));
         }
+    }
+        
+    public static double circle_segment(double rad, double th) {
+        return rad*rad*(th - Math.sin(th))/2;
     }
 }
