@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Country Leader
  * 
- *  The Constitution of a certain country states that the leader is the person
+ * The Constitution of a certain country states that the leader is the person
  * with the name containing the greatest number of different alphabet letters.
  * (The country uses the uppercase English alphabet from A through Z.) For
  * example, the name GOOGLE has four different alphabet letters: E, G, L, and O.
