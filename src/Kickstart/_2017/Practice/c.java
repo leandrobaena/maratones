@@ -1,4 +1,4 @@
-package Kickstar._2017.Practice;
+package Kickstart._2017.Practice;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
