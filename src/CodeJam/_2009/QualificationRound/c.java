@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
 
 /**
  * Welcome to Code Jam
